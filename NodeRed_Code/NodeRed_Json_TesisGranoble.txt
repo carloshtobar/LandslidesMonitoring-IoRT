@@ -1,0 +1,326 @@
+//Monitorización de deslizamientos de tierra en el Macizo Colombiano del sur del departamento del Cauca mediante IoRT
+//TESIS GRANOBLE
+
+//By: Cristian Camilo Granoble Gaviria - Luis Alejandro Granoble Gaviria
+
+// Configuración de Node Red en formato Json
+
+[
+    {
+        "id": "ebe1f2f5edddf3e0",
+        "type": "tab",
+        "label": "Tesis Granoble Bien - Final",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "084bed25ecb960bd",
+        "type": "change",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "payload.data",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "hiveRxTime",
+                "pt": "msg",
+                "to": "payload.hiveRxTime",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "7a6ff18e0c2894e5",
+                "dacbe30b3c607467"
+            ]
+        ]
+    },
+    {
+        "id": "9e7eb9754c37b4e4",
+        "type": "http in",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "",
+        "url": "/unicauca",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "9da272c6589abc82",
+                "084bed25ecb960bd"
+            ]
+        ]
+    },
+    {
+        "id": "9da272c6589abc82",
+        "type": "http response",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "7a6ff18e0c2894e5",
+        "type": "function",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "Decodificador - Base64",
+        "func": "msg.payload = Buffer.from(msg.payload.data,'base64').toString()\n\nreturn msg\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "65bd3591f48f67f4",
+                "9c4813256c8661ae"
+            ]
+        ]
+    },
+    {
+        "id": "9c4813256c8661ae",
+        "type": "change",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "hiveRxTime",
+                "pt": "msg",
+                "to": "hiveRxTime",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 380,
+        "wires": [
+            [
+                "0c630c87862e0855",
+                "9b8ce84e0e441de9"
+            ]
+        ]
+    },
+    {
+        "id": "dacbe30b3c607467",
+        "type": "debug",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "debug change 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "65bd3591f48f67f4",
+        "type": "debug",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "debug decode base 64",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "0c630c87862e0855",
+        "type": "debug",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "debug change 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "c989a58f358bca40",
+        "type": "json",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1110,
+        "y": 380,
+        "wires": [
+            [
+                "be4d56237ef6dbcc",
+                "34845eb144b43863"
+            ]
+        ]
+    },
+    {
+        "id": "2f0b43161b6396de",
+        "type": "mysql",
+        "z": "ebe1f2f5edddf3e0",
+        "mydb": "ebe7c619d136793e",
+        "name": "database 2",
+        "x": 1590,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "181f78ecdd6386ae",
+        "type": "debug",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "debug Agrega BD - Sensores",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1540,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "be4d56237ef6dbcc",
+        "type": "function",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "func - Agrega BD - Sensores",
+        "func": "var mensaje = msg.payload;\nvar hora = msg.hiveRxTime;\n\n\n// SACAMOS EL NUMERO ENTERO DE LA HORA\n\nvar id = msg.payload[\"Fecha:\"];\nvar entero = parseInt(id, 10);\n\n// AGRAGAMOS A LA BASE DE DATOS\n\nmsg.topic = `insert into valores (Fecha, Hora, Hum_Relativa, Temp_Relativa, Hum_Suelo, Temp_Suelo, Precipitacion, Id) VALUES ('` + msg.payload[\"Fecha:\"] + `','` + msg.payload[\"Hora:\"] + `','` + msg.payload[\"Hum.R: \"] + `','` + msg.payload[\"Temp.A: \"] + `','` + msg.payload[\"Hum.S: \"] + `','` + msg.payload[\"Temp.S: \"] + `','` + msg.payload[\"Lluvia: \"] + `', '` + entero + `')`;\n\nreturn msg;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n//var mensaje1 = msg.payload[\"HUM.R: \"]; \n\n//var camilo = Object.HUM.R;\n//Ejemplo de arduino\n\n\n\n\n//msg.topic = `insert into valores (FECHA, HUM_RELATIVA, TEMP_RELATIVA, HUM_SUELO, TEMP_SUELO, LLUVIA) VALUES ('` + msg.payload[\"Fecha:\"] + `','` + msg.payload[\"Hum.R: \"] + `','` + msg.payload[\"Temp.R: \"] + `','` + msg.payload[\"Hum.S: \"] + `','` + msg.payload[\"Temp.S: \"] + `','` + msg.payload[\"Lluvia: \"] + `')`;\n\n\n\n// FUNCIONA BIEN, PERO SIN FUNCION DE AUTOINCREMENTARmsg.topic = `INSERT INTO valores_Granoble_2 VALUES ('` + hora + `','` + msg.payload[\"HUM.R: \"] + `','` + msg.payload[\"TEMP.R: \"] + `','` + msg.payload[\"HUM.S: \"] + `','` + msg.payload[\"TEMP.S: \"] + `','` + msg.payload[\"LLUVIA: \"] + `')`;\n\n//msg.topic=`INSERT INTO valores VALUES (DEFAULT, ${parseInt(msg.payload.replace('\\n',''))})`;\n////////msg.topic = `INSERT INTO valores_completa VALUES ('` + 'HUM.R' + `','` + HUM.R + `','` + HUM.R + `','` + HUM.R + `','` + HUM.R + `','` + 'HUM.R' + `')`;\n\n//msg.topic=`INSERT INTO valores_string VALUES ('sdfsd ', 'sdfsdf ')`;\n//NOta: Valores_string: es la tabla de la base de datos: ejemplo_string\n//Nota: valores: es la tabla de la base de datos :ejemplo y arduino\n\n\n\n//Ejemplo para variar datos sin los que llegan\n//msg.topic = \"INSERT INTO valores(fecha, 'informacion') VALUES (32','23')\";\n\n\n//Ejemplo que si trae la hora y la fecha pero aparece error a la hora de entrar (ejem con ``)\n//msg.topic = `INSERT INTO valores(fecha, informacion) VALUES( ` + hora + hora + `, ` + mensaje + mensaje + `)`;\n\n\n//Ejemplo que si trae la hora y la fecha pero aparece error a la hora de entrar (ejem con \"\") (mismo anterior)\n//msg.topic = \"INSERT INTO `valores`(`fecha`, `informacion`) VALUES( \" + hora + \", \" + mensaje + mensaje + \")\";\n\n\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 380,
+        "wires": [
+            [
+                "2f0b43161b6396de",
+                "181f78ecdd6386ae"
+            ]
+        ]
+    },
+    {
+        "id": "34845eb144b43863",
+        "type": "debug",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "debug - convert - Json - Java",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1320,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "9b8ce84e0e441de9",
+        "type": "change",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 380,
+        "wires": [
+            [
+                "c989a58f358bca40",
+                "9f6011fcd01c8aa7"
+            ]
+        ]
+    },
+    {
+        "id": "9f6011fcd01c8aa7",
+        "type": "debug",
+        "z": "ebe1f2f5edddf3e0",
+        "name": "debug 53",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ebe7c619d136793e",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "4000",
+        "db": "TesisGranoble",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]
